@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mocho Hoshino.I — Carnet du Combattant</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(160deg, #0c1220 0%, #131b2b 100%);
+    color: #e3e8f0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+  }
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+  .hero .vague {
+    font-size: 46px;
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-size: 30px;
+    color: #7fd4ff;
+    margin-bottom: 6px;
+  }
+  .hero p {
+    color: #8595ad;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 0 40px;
+  }
+  .filter-btn {
+    padding: 9px 20px;
+    border-radius: 30px;
+    border: 1px solid #2a3a52;
+    background: #131c2c;
+    color: #8595ad;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover {
+    border-color: #4fa8e0;
+    color: #d8e8f5;
+  }
+  .filter-btn.active {
+    background: #1d5a8c;
+    border-color: #4fa8e0;
+    color: white;
+    font-weight: 600;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 30px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: #121b2b;
+    border: 1px solid #233048;
+    border-radius: 14px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: var(--c);
+  }
+  .card .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    border: 1px solid var(--c);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .card h3 {
+    font-size: 17px;
+    color: #f1f4f9;
+    margin-bottom: 6px;
+  }
+  .card .date {
+    font-size: 11px;
+    color: #5d6b85;
+    margin-bottom: 12px;
+  }
+  .card p {
+    font-size: 13.5px;
+    color: #aebbd1;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .card img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #233048;
+    display: block;
+    cursor: zoom-in;
+  }
+  .card.hidden { display: none; }
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat .n {
+    font-size: 28px;
+    font-weight: 700;
+    color: #7fd4ff;
+  }
+  .stat .l {
+    font-size: 11px;
+    color: #5d6b85;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(5,8,14,0.9);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    border: 1px solid #2a3a52;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="vague">🌊</div>
+  <h1>Carnet du Combattant — Mocho Hoshino.I</h1>
+  <p>SOUFFLE DE L'EAU · CLAN HASHIBARA</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="n">2</div><div class="l">Tournois</div></div>
+  <div class="stat"><div class="n">1</div><div class="l">Patrouilles</div></div>
+  <div class="stat"><div class="n">4</div><div class="l">Éliminations</div></div>
+  <div class="stat"><div class="n">1</div><div class="l">Promotion</div></div>
+</div>
+
+<div class="filters">
+  <div class="filter-btn active" data-filter="TOUS">Tous</div>
+  <div class="filter-btn" data-filter="PATROUILLE">Patrouille</div>
+  <div class="filter-btn" data-filter="DÉMON">Démon</div>
+  <div class="filter-btn" data-filter="ÉVÉNEMENT">Évènement</div>
+  <div class="filter-btn" data-filter="BRIGADE">Brigade</div>
+</div>
+
+<div class="container">
+
+  <div class="card" data-category="ÉVÉNEMENT" style="--c:#ffcf4d;">
+    <span class="tag">Évènement</span>
+    <h3>Tournoi Eau vs Son</h3>
+    <div class="date">26/06/2026 — 19:31</div>
+    <p>Le Souffle du Son s'est imposé face à nous, 5 à 3, mettant fin à notre série de victoires. Malgré la défaite collective, j'ai su tirer mon épingle du jeu et j'ai remporté un point pour ma faction.</p>
+    <img src="images/tournoi_eau_vs_son.png" alt="Tournoi Eau vs Son">
+  </div>
+
+  <div class="card" data-category="ÉVÉNEMENT" style="--c:#ffcf4d;">
+    <span class="tag">Évènement</span>
+    <h3>Tournoi Eau vs Roche</h3>
+    <div class="date">21/06/2026 — 17:56</div>
+    <p>Une nouvelle épreuve s'est dressée devant nous : le Souffle de la Roche. J'ai défendu les couleurs de l'Eau lors de cet affrontement inter-souffle.</p>
+    <img src="images/tournoi_eau_vs_roche.png" alt="Tournoi Eau vs Roche">
+  </div>
+
+  <div class="card" data-category="PATROUILLE" style="--c:#5fc6ff;">
+    <span class="tag">Patrouille</span>
+    <h3>Patrouille — Zone Neige</h3>
+    <div class="date">23/06/2026 — 13:40</div>
+    <p>J'ai participé à la patrouille de Kishin Ubud, organisée par Kiro, en zone neige, avec Shio Delf et Kirari.</p>
+    <img src="images/patrouille_zone_neige.png" alt="Patrouille zone neige">
+  </div>
+
+  <div class="card" data-category="BRIGADE" style="--c:#b98cff;">
+    <span class="tag">Brigade</span>
+    <h3>Promotion Judiciaire</h3>
+    <div class="date">22/06/2026 — 28/06/2026</div>
+    <p>J'ai été promu au rang d'Inspecteur au sein de la Brigade Judiciaire.</p>
+    <img src="images/promotion_brigade.png" alt="Promotion Brigade Judiciaire">
+  </div>
+
+  <div class="card" data-category="DÉMON" style="--c:#ff6b6b;">
+    <span class="tag">Démon</span>
+    <h3>Élimination de Ryou</h3>
+    <div class="date">25/06/2026 — 14:30</div>
+    <p>J'ai éliminé le démon Ryou.</p>
+    <img src="images/kill_ryou.png" alt="Élimination de Ryou">
+  </div>
+
+  <div class="card" data-category="DÉMON" style="--c:#ff6b6b;">
+    <span class="tag">Démon</span>
+    <h3>Élimination d'Atsuki Jin</h3>
+    <div class="date">26/06/2026 — 17:22</div>
+    <p>J'ai éliminé Atsuki Jin.</p>
+    <img src="images/kills_atsuki_zirossi.png" alt="Élimination d'Atsuki Jin">
+  </div>
+
+  <div class="card" data-category="DÉMON" style="--c:#ff6b6b;">
+    <span class="tag">Démon</span>
+    <h3>Élimination d'Atsuki Jin</h3>
+    <div class="date">26/06/2026 — 20:04</div>
+    <p>J'ai de nouveau éliminé Atsuki Jin.</p>
+    <img src="images/kills_atsuki_zirossi.png" alt="Élimination d'Atsuki Jin">
+  </div>
+
+  <div class="card" data-category="DÉMON" style="--c:#ff6b6b;">
+    <span class="tag">Démon</span>
+    <h3>Élimination de Zirossi</h3>
+    <div class="date">26/06/2026 — 21:10</div>
+    <p>J'ai éliminé le démon Zirossi.</p>
+    <img src="images/kills_atsuki_zirossi.png" alt="Élimination de Zirossi">
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'TOUS' || card.dataset.category === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  document.querySelectorAll('.card img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('open');
+  });
+</script>
+
+</body>
+</html>
