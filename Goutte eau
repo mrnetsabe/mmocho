@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Souffle de l'Eau – Classement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;800&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e8f3f5;--panel:#ffffff;--ink:#0a2a40;--mute:#547489;--line:#bcd6df;
+  --wave:#1f7fa8;--wave2:#7fd0e6;--gold:#b8872a;--foam:#f6fcfd;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#061a2b;--panel:#0b2a40;--ink:#e6f6fb;--mute:#8fb5c8;--line:#1c4a66;--wave:#2f9fcc;--wave2:#8fe0f2;--gold:#e5b94e;--foam:#0e3550;}}
+:root[data-theme="dark"]{--bg:#061a2b;--panel:#0b2a40;--ink:#e6f6fb;--mute:#8fb5c8;--line:#1c4a66;--wave:#2f9fcc;--wave2:#8fe0f2;--gold:#e5b94e;--foam:#0e3550}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New",system-ui,sans-serif;line-height:1.5}
+header{position:relative;padding:44px 20px 52px;color:#f2fbff;overflow:hidden;
+  background:linear-gradient(180deg,#0d4f78,#0a2f4d)}
+header::before{content:"";position:absolute;inset:0;opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23bfeaf7' stroke-opacity='.35'%3E%3Ccircle cx='0' cy='24' r='24'/%3E%3Ccircle cx='0' cy='24' r='17'/%3E%3Ccircle cx='0' cy='24' r='10'/%3E%3Ccircle cx='48' cy='24' r='24'/%3E%3Ccircle cx='48' cy='24' r='17'/%3E%3Ccircle cx='48' cy='24' r='10'/%3E%3Ccircle cx='24' cy='12' r='24'/%3E%3Ccircle cx='24' cy='12' r='17'/%3E%3Ccircle cx='24' cy='12' r='10'/%3E%3C/g%3E%3C/svg%3E")}
+header .in{position:relative;max-width:1100px;margin:0 auto}
+h1{font-family:"Shippori Mincho",serif;font-weight:800;font-size:clamp(2rem,6vw,3.6rem);margin:0;letter-spacing:.04em}
+header p{margin:6px 0 0;color:#bfe6f4;max-width:48ch}
+.kanji{position:absolute;right:0;top:-18px;font-family:"Shippori Mincho",serif;font-weight:800;font-size:clamp(5rem,16vw,10rem);color:#bfeaf7;opacity:.16;line-height:1}
+header svg.sea{position:absolute;left:0;bottom:-1px;width:100%;height:28px}
+header svg.sea path{fill:var(--bg)}
+main{max-width:1100px;margin:0 auto;padding:8px 16px 48px;display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:900px){main{grid-template-columns:1.05fr 1fr;align-items:start}}
+section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+h2{font-family:"Shippori Mincho",serif;font-size:1.4rem;margin:0 0 12px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:999px;border:1px solid var(--wave);background:var(--wave);color:#fff;padding:7px 16px;transition:transform .15s,background .15s}
+button:hover{transform:translateY(-1px)}
+button.ghost{background:transparent;color:var(--wave)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--wave2);outline-offset:1px}
+.grid{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:420px}
+th{background:var(--foam);text-align:left;font-weight:700;padding:8px 10px;border-bottom:1px solid var(--line);color:var(--mute);font-size:.9rem}
+td{border-bottom:1px solid var(--line);padding:0}
+td+td,th+th{border-left:1px solid var(--line)}
+td input{width:100%;border:0;background:transparent;color:var(--ink);font:inherit;padding:9px 10px;border-radius:0}
+td input:focus{background:var(--foam)}
+td.pts input{text-align:right;font-variant-numeric:tabular-nums}
+td.x{width:40px;text-align:center}
+td.x button{background:none;border:0;color:var(--mute);padding:4px 10px;font-size:1.1rem}
+details{margin-top:14px}
+summary{cursor:pointer;color:var(--wave);font-weight:700}
+textarea{width:100%;min-height:90px;margin-top:8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;padding:10px}
+.hint{color:var(--mute);font-size:.88rem;margin:8px 0 0}
+ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li.row{position:relative;display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:var(--foam);overflow:hidden;border:1px solid var(--line)}
+li.row .water{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--wave2),transparent);opacity:.35;transition:width .6s cubic-bezier(.3,.8,.3,1)}
+li.row>*:not(.water){position:relative}
+.rank{font-family:"Shippori Mincho",serif;font-weight:800;font-size:1.7rem;text-align:center;color:var(--mute)}
+li.row.top1{border-color:var(--gold);border-width:2px}
+li.top1 .rank{color:var(--gold);font-size:2.1rem}
+li.top2 .rank,li.top3 .rank{color:var(--wave)}
+.nm{font-weight:700;font-size:1.05rem;overflow-wrap:anywhere}
+.nt{display:block;font-weight:400;color:var(--mute);font-size:.86rem}
+.sc{font-family:"Shippori Mincho",serif;font-weight:800;font-size:1.35rem;font-variant-numeric:tabular-nums}
+.empty{color:var(--mute);padding:18px;text-align:center;border:1px dashed var(--line);border-radius:12px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="in">
+    <div class="kanji" aria-hidden="true">水</div>
+    <h1>Souffle de l'Eau</h1>
+    <p>Saisissez vos données comme dans un tableur. Les points de chaque membre s'additionnent, du plus haut total au plus bas.</p>
+  </div>
+  <svg class="sea" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14C100 0 200 28 300 14S500 0 600 14s200 14 300 0 200-14 300 0V28H0Z"/></svg>
+</header>
+<main>
+  <section aria-labelledby="t1">
+    <h2 id="t1">Tableur</h2>
+    <div class="tools">
+      <button id="add">Ajouter une ligne</button>
+      <button id="clear" class="ghost">Tout effacer</button>
+      <button id="csv" class="ghost">Exporter en CSV</button>
+    </div>
+    <div class="grid">
+      <table>
+        <thead><tr><th>Membre</th><th>Activité</th><th style="text-align:right">Points</th><th></th></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+    <details>
+      <summary>Importer depuis Excel ou Google Sheets</summary>
+      <textarea id="paste" placeholder="Isamu	Elimination	1&#10;Mocho	Brigade	1"></textarea>
+      <div class="tools" style="margin-top:8px"><button id="imp">Importer les lignes</button></div>
+      <p class="hint">Copiez vos cellules (Membre, Activité, Point) et collez-les ici. Séparateurs acceptés : tabulation, point-virgule, virgule.</p>
+    </details>
+  </section>
+  <section aria-labelledby="t2">
+    <h2 id="t2">Classement</h2>
+    <ol id="board" aria-live="polite"></ol>
+  </section>
+</main>
+<script>
+const KEY="souffle-eau-data-v2";
+let rows=[];
+try{rows=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){rows=[]}
+if(!Array.isArray(rows)||!rows.length){
+  rows=[{n:"Isamu",t:"Elimination",p:1},{n:"Kaito",t:"Participation",p:1},{n:"Mocho",t:"Organisation",p:2},{n:"kaito",t:"Organisation",p:2},{n:"Isamu",t:"Participation",p:1},{n:"Raya",t:"Organisation",p:2},{n:"Washimo",t:"Participation",p:1},{n:"Mocho",t:"Event Majeur",p:3},{n:"Mocho",t:"Event Majeur",p:3},{n:"Mocho",t:"Brigade",p:1},{n:"Mocho",t:"Démon",p:1},{n:"Isamu",t:"Brigade",p:3}];
+}
+const $=id=>document.getElementById(id);
+const kanji=["壱","弐","参"];
+function save(){try{localStorage.setItem(KEY,JSON.stringify(rows))}catch(e){}}
+function renderTable(){
+  const b=$("body");b.innerHTML="";
+  rows.forEach((r,i)=>{
+    const tr=document.createElement("tr");
+    [["n","text","Membre",""],["t","text","Activité",""],["p","number","0","pts"]].forEach(([k,type,ph,cls])=>{
+      const td=document.createElement("td");if(cls)td.className=cls;
+      const inp=document.createElement("input");inp.type=type;inp.placeholder=ph;inp.value=r[k]??"";
+      if(type==="number")inp.step="any";
+      inp.setAttribute("aria-label",ph+" ligne "+(i+1));
+      inp.addEventListener("input",()=>{r[k]=type==="number"?(parseFloat(inp.value)||0):inp.value;save();renderBoard()});
+      td.appendChild(inp);tr.appendChild(td);
+    });
+    const x=document.createElement("td");x.className="x";
+    const d=document.createElement("button");d.textContent="×";d.setAttribute("aria-label","Supprimer la ligne "+(i+1));
+    d.onclick=()=>{rows.splice(i,1);save();renderTable();renderBoard()};
+    x.appendChild(d);tr.appendChild(x);b.appendChild(tr);
+  });
+}
+function renderBoard(){
+  const ol=$("board");ol.innerHTML="";
+  const map=new Map();
+  rows.forEach(r=>{const n=(r.n||"").trim();if(!n)return;const k=n.toLowerCase();let o=map.get(k);
+    if(!o){o={n:n.charAt(0).toUpperCase()+n.slice(1),p:0,c:0};map.set(k,o)}o.p+=r.p||0;o.c++});
+  const list=[...map.values()].sort((a,b)=>b.p-a.p||a.n.localeCompare(b.n));
+  if(!list.length){ol.innerHTML='<div class="empty">Ajoutez un nom et des points dans le tableur pour lancer le classement.</div>';return}
+  const max=Math.max(...list.map(r=>r.p||0),1);
+  let rank=0,prev=null;
+  list.forEach((r,i)=>{
+    if(r.p!==prev){rank=i+1;prev=r.p}
+    const li=document.createElement("li");li.className="row"+(rank<=3?" top"+rank:"");
+    const w=document.createElement("div");w.className="water";w.style.width=Math.max(4,Math.min(100,(r.p||0)/max*100))+"%";
+    const rk=document.createElement("div");rk.className="rank";rk.textContent=rank<=3?kanji[rank-1]:rank;
+    rk.setAttribute("aria-label","Rang "+rank);
+    const nm=document.createElement("div");nm.className="nm";nm.textContent=r.n;
+    {const s=document.createElement("span");s.className="nt";s.textContent=r.c+(r.c>1?" activités":" activité");nm.appendChild(s)}
+    const sc=document.createElement("div");sc.className="sc";sc.textContent=(r.p||0).toLocaleString("fr-FR")+" pts";
+    li.append(w,rk,nm,sc);ol.appendChild(li);
+  });
+}
+$("add").onclick=()=>{rows.push({n:"",p:0,t:""});save();renderTable();renderBoard();
+  const ins=$("body").querySelectorAll("tr:last-child input");if(ins[0])ins[0].focus()};
+$("clear").onclick=()=>{if(rows.length&&confirm("Effacer toutes les lignes ?")){rows=[];save();renderTable();renderBoard()}};
+$("imp").onclick=()=>{
+  const lines=$("paste").value.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);let c=0;
+  lines.forEach(l=>{
+    const sep=l.includes("\t")?"\t":l.includes(";")?";":",";
+    const p=l.split(sep).map(s=>s.trim());
+    const num=parseFloat((p[2]||"").replace(/\s/g,"").replace(",","."));
+    if(!p[0]||isNaN(num))return; // ignore en-têtes et lignes invalides
+    rows.push({n:p[0],t:p[1]||"",p:num});c++;
+  });
+  if(c){$("paste").value="";save();renderTable();renderBoard()}else alert("Aucune ligne valide : utilisez le format Membre, Activité, Point.");
+};
+$("csv").onclick=()=>{
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const txt="Membre;Activité;Points\n"+rows.map(r=>[q(r.n),q(r.t),r.p].join(";")).join("\n");
+  const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent(txt);a.download="classement.csv";a.click();
+};
+renderTable();renderBoard();
+</script>
+</body>
+</html>
